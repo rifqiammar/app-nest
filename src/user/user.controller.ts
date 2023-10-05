@@ -9,22 +9,30 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 
-@Controller('user') // localhost:3000/user
+@Controller('users') // localhost:3000/user
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('tambah') // // localhost:3000/user/tambah
-  create(@Body() createUserDto: any) {
-    return this.userService.create(createUserDto);
+  @Post('tambah') // // localhost:3000/user/tambah |
+  // @body == req.body || params,
+  create(@Body() body: any) {
+    return this.userService.create(body);
   }
 
-  @Get('getalluser') // localhost:3000/user/getalluser
+  @Get('getallusers') // localhost:3000/user/getalluser
   findAll() {
     return this.userService.findAll();
   }
 
-  @Get('user/:id') // localhost:3000/user/:id
+  @Get('getallcustomers') // localhost:3000/user/getalluser
+  findAllCustomers() {
+    return this.userService.findAllCustomer();
+  }
+
+  @Get('user/:id') // localhost:3000/user/:id | // app.get('/user/:id') di express | ('app/user/:id)
+  // @params == req.params
   findOne(@Param('id') id: string) {
+    // +id, convert operator
     return this.userService.findOne(+id);
   }
 
@@ -38,3 +46,5 @@ export class UserController {
     return this.userService.remove(+id);
   }
 }
+
+// https://docs.nestjs.com/controllers

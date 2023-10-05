@@ -1,13 +1,46 @@
 import { Injectable } from '@nestjs/common';
+import { customers, users } from 'model';
+import { errorHandling } from 'helper/errorhandling';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: any) {
-    return 'This action adds a new user';
+  async create(body: any) {
+    try {
+      const { username, password } = body;
+
+      const saltOrRounds = 10;
+      const hash = await bcrypt.hash(password, saltOrRounds);
+
+      const result = await users.create(
+        {
+          username: username,
+          password: hash,
+        },
+        { returning: true },
+      );
+      return errorHandling(200, 'Berhasil', result);
+    } catch (error) {
+      return errorHandling(500, error.message);
+    }
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll() {
+    try {
+      const result = await users.findAll();
+      return result;
+    } catch (error) {
+      return `${error.message}`;
+    }
+  }
+
+  async findAllCustomer() {
+    try {
+      const result = await customers.findAll();
+      return result;
+    } catch (error) {
+      return `${error.message}`;
+    }
   }
 
   findOne(id: number) {
