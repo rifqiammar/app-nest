@@ -31,6 +31,7 @@
     "pg": "^8.11.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
+    "sequelize-typescript": "^2.1.5",
     "sequelize-typescript-generator": "^10.1.2"
   },
   "devDependencies": {

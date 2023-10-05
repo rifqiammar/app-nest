@@ -19,6 +19,12 @@ export class UserController {
     return this.userService.create(body);
   }
 
+  // Store Procedure Menggunakan Query
+  @Post('/tambahusercust')
+  insertusercust(@Body() fields: any) {
+    return this.userService.insertusercust(fields);
+  }
+
   @Get('getallusers') // localhost:3000/user/getalluser
   findAll() {
     return this.userService.findAll();
