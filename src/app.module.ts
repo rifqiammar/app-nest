@@ -13,7 +13,6 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 // import { AuthMiddleware } from '../middleware/auth.middleware';
 import { LoggerMiddleware } from '../middleware/logger.middleware';
-import { ProducModule } from './produc/produc.module';
 
 @Module({
   providers: [LoggerMiddleware],
@@ -37,7 +36,6 @@ import { ProducModule } from './produc/produc.module';
     OrderModule,
     UsersModule,
     AuthModule,
-    ProducModule,
   ],
 })
 export class AppModule implements NestModule {
