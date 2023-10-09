@@ -8,8 +8,9 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+// import { CreateUserDto } from './userdto.dto';
 
-@Controller('users') // localhost:3000/user
+@Controller('user') // localhost:3000/user
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

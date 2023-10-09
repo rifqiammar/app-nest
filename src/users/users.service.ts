@@ -1,33 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { customers, users } from 'model';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { errorHandling } from 'helper/errorhandling';
 import * as bcrypt from 'bcrypt';
 import { Sequelize } from 'sequelize-typescript';
-// import { CreateUserDto } from './userdto.dto';
+import { users } from 'model';
 
 @Injectable()
-export class UserService {
-  //Defns Sequelize Type Script
+export class UsersService {
   constructor(private readonly sequelize: Sequelize) {}
 
-  async getByUser(body: any) {
+  async create(createUserDto: CreateUserDto) {
     try {
-      const result = await users.findOne({
-        where: {
-          username: body,
-        },
-      });
-
-      return errorHandling(500, 'berhasil', result);
-    } catch (error) {
-      // return error.message;
-      return errorHandling(500, error.message);
-    }
-  }
-
-  async create(body: any) {
-    try {
-      const { username, password } = body;
+      const { username, password } = createUserDto;
 
       const saltOrRounds = 10;
       const hash = await bcrypt.hash(password, saltOrRounds);
@@ -49,6 +34,7 @@ export class UserService {
   async insertusercust(fields: any) {
     try {
       const { dt_user, dt_customer } = fields;
+
       dt_user.createdat = new Date();
       dt_customer.createdat = new Date();
 
@@ -67,29 +53,15 @@ export class UserService {
     }
   }
 
-  async findAll() {
-    try {
-      const result = await users.findAll();
-      return errorHandling(200, 'Berhasil', result);
-    } catch (error) {
-      return errorHandling(500, error.message);
-    }
-  }
-
-  async findAllCustomer() {
-    try {
-      const result = await customers.findAll();
-      return result;
-    } catch (error) {
-      return `${error.message}`;
-    }
+  findAll() {
+    return `This action returns all users`;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: any) {
+  update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
