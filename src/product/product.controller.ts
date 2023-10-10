@@ -23,12 +23,12 @@ import { errorHandling } from 'helper/errorhandling';
 const allowedFileExtension = ['jpg', 'png', 'JPG', 'PNG'];
 const fileFilterOption = (req: any, file: any, cb: any) => {
   const ext = file.originalname.split('.').pop();
-  if (allowedFileExtension.includes(ext)) {
-    cb(null, true);
-  } else {
+  if (!allowedFileExtension.includes(ext)) {
     req.errorValidateFile = 'Hanya Boleh Image';
     cb(null, false);
   }
+
+  cb(null, true);
 };
 
 // Multer Configuration
@@ -42,6 +42,7 @@ const MulterOption = {
     },
   }),
   fileFilter: fileFilterOption,
+  limits: { fileSize: 2 * 1024 * 1024 },
 };
 
 @Controller('product')
@@ -76,8 +77,11 @@ export class ProductController {
   // Get data Image
   @Get('img/:imgpath')
   getImage(@Param('imgpath') img: any, @Res() res: any) {
-    console.log();
-    res.sendFile(img, { root: './upload' });
+    try {
+      res.sendFile(img, { root: './upload' });
+    } catch (error) {
+      errorHandling(500, error.message);
+    }
   }
 
   @Get()

@@ -30,8 +30,13 @@ export class ProductService {
     }
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    try {
+      const result = await product.findAll();
+      return errorHandling(200, 'Berhasil', result);
+    } catch (error) {
+      return errorHandling(500, error.message);
+    }
   }
 
   async findOne(id: number) {
