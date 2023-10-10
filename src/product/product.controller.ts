@@ -43,6 +43,7 @@ const MulterOption = {
   }),
   fileFilter: fileFilterOption,
   limits: { fileSize: 2 * 1024 * 1024 },
+  //Limits File
 };
 
 @Controller('product')
