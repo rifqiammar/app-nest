@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+// import { CreateProductDto } from './dto/create-product.dto';
+// import { UpdateProductDto } from './dto/update-product.dto';
 import { product } from 'model';
 import { Sequelize } from 'sequelize-typescript';
 import { errorHandling } from 'helper/errorhandling';
@@ -34,15 +34,40 @@ export class ProductService {
     return `This action returns all product`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: number) {
+    const result = await product.findOne({ where: { id: id } });
+    return errorHandling(200, 'berhasil', result);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: any) {
+    try {
+      const result = await product.update(
+        {
+          nama_produk: updateProductDto.produk,
+          description: updateProductDto.description,
+          categoryid: updateProductDto.categoryid,
+          product_price: updateProductDto.price,
+          image: updateProductDto.img,
+          createdat: updateProductDto.createdat,
+        },
+        {
+          where: {
+            id: id,
+          },
+        },
+      );
+      return errorHandling(200, 'berhasil', result);
+    } catch (error) {
+      errorHandling(500, error.message);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    try {
+      const result = await product.destroy({ where: { id: id } });
+      return errorHandling(200, 'sukses', result);
+    } catch (e: any) {
+      return errorHandling(400, e.message);
+    }
   }
 }
