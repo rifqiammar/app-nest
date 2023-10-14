@@ -4,7 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { errorHandling } from 'helper/errorhandling';
 import * as bcrypt from 'bcrypt';
 import { Sequelize } from 'sequelize-typescript';
-import { users } from 'model';
+import { customers, users } from 'model';
 
 @Injectable()
 export class UsersService {
@@ -53,8 +53,17 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    try {
+      const result = await customers.findAll({
+        include: users,
+      });
+      return errorHandling(200, 'Success', result);
+    } catch (error) {
+      return errorHandling(500, error.message);
+    }
+
+    // return `This action returns all users`;
   }
 
   findOne(id: number) {

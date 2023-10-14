@@ -1,0 +1,11 @@
+1:1, id, user_id, users, customer
+1:N, id, category_id, product_category, products
+1:N, id, user_id, users, orders
+1:N, id, order_id, orders, order_detail
+1:N, id, product_id, products, order_detail
+
+
+
+
+
+    // "genModelDB": "stg -D postgres -h localhost -p 5432 -d eproduct -u postgres -x root -o model"

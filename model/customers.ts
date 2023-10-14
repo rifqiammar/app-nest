@@ -6,7 +6,9 @@ import {
   Index,
   Sequelize,
   ForeignKey,
+  BelongsTo,
 } from 'sequelize-typescript';
+import { users } from './users';
 
 export interface customersAttributes {
   id?: number;
@@ -36,6 +38,7 @@ export class customers
   @Column({ allowNull: true, type: DataType.STRING(100) })
   lastname?: string;
 
+  @ForeignKey(() => users)
   @Column({ allowNull: true, type: DataType.INTEGER })
   userid?: number;
 
@@ -48,4 +51,7 @@ export class customers
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
   })
   updateat?: Date;
+
+  @BelongsTo(() => users)
+  user?: users;
 }

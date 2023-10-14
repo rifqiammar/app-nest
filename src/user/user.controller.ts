@@ -28,7 +28,8 @@ export class UserController {
 
   @Get('getallusers') // localhost:3000/user/getalluser
   findAll() {
-    return this.userService.findAll();
+    // return this.userService.findAll();
+    return 'Bismillah';
   }
 
   @Get('getallcustomers') // localhost:3000/user/getalluser
